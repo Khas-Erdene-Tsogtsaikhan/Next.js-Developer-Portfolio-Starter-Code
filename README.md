@@ -1,47 +1,43 @@
-# Next.Js Website Tutorial: Create a Stunning Portfolio Website with Nextjs, Tailwind CSS and Framer-motion🌟
+# Khas-Erdene Tsogtsaikhan — Portfolio
 
-![GitHub stars](https://img.shields.io/github/stars/codebucks27/Next.js-Developer-Portfolio-Starter-Code?style=social&logo=ApacheSpark&label=Stars)&nbsp;&nbsp;
-![GitHub forks](https://img.shields.io/github/forks/codebucks27/Next.js-Developer-Portfolio-Starter-Code?style=social&logo=KashFlow&maxAge=3600)&nbsp;&nbsp;
-![Github Followers](https://img.shields.io/github/followers/codebucks27.svg?style=social&label=Follow)&nbsp;&nbsp;<br />
+Production portfolio for Khas-Erdene Tsogtsaikhan, a UC Berkeley EECS student and founder-engineer focused on AI systems, LLMOps, evaluation infrastructure, and zero-to-one products.
 
-This repository contains starter code for Portfolio website created using NextJs. <br />
+## Highlights
 
-For Demo and Final Code checkout following link👇: <br />
-[Nextjs Portfolio Website](https://devdreaming.com//videos/nextjs-tutorial-build-portfolio-tailwind-css-framer-motion#code-links) <br />
+- Recruiter-focused project gallery with technical case studies
+- KhasOS, a local assistant grounded in verified portfolio data
+- AI systems and agent architecture visualizations
+- Responsive motion with reduced-motion support
+- Static Next.js pages with no paid model or chatbot API
 
-If you want to learn how to create it please follow below tutorial👇: <br />
-https://youtu.be/Yw7yWHigGKI <br />
-[![YouTube Video Views](https://img.shields.io/youtube/views/Yw7yWHigGKI?style=social)](https://youtu.be/Yw7yWHigGKI)<br />
+## Local development
 
----
-✨ Checkout my brand new Saas application -> [AI Headshot Generator](https://www.smartheadshots.ai)
+```bash
+npm install
+npm run dev
+```
 
----
+Open `http://localhost:3000`.
 
-### Images of The Portfolio Website:
+## Quality checks
 
-![Nextjs Portfolio Website](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/home-light-desktop.png)
-![Nextjs Portfolio Website Dark Mode](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/home-dark-desktop.png)
-![Next.js Portfolio Website](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/about-light-desktop.png)
-![Next js Portfolio Website](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/projects-dark-desktop.png)
-![Portfolio Website In Next.js](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/articles-light-desktop.png)
-![Responsive Portfolio Website In Nextjs](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/about-light-mobile.png)
-![Responsive Portfolio Website In Next js](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/projects-light-mobile.png)
-![Mobile Responsive Portfolio Website In Next.js](https://github.com/codebucks27/Next.js-Developer-Portfolio-Starter-Code/blob/main/website%20images/articles-light-mobile.png)
+```bash
+npm run lint
+npm run build
+```
 
+GitHub Actions runs both checks on pushes and pull requests.
 
-### Resources Used in This Project
+## Structure
 
-- Profile image in the home page created by using https://www.midjourney.com/ tool.
-- Profile image in the about page by [Albert Dera](https://unsplash.com/@albertdera?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) 
-on [Unsplash](https://unsplash.com/photos/ILip77SbmOE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
-- Fonts from https://fonts.google.com/ <br />
-- Icons from https://iconify.design/ <br />
-- LightBulb Svg from https://lukaszadam.com/illustrations <br />
+- `src/components/ai/` — portfolio and KhasOS interface
+- `src/data/resumePortfolio.js` — verified portfolio content
+- `src/lib/khas-os.js` — local retrieval and response logic
+- `src/pages/projects/[slug].js` — case-study routes
+- `public/evidence/` — project evidence and screenshots
 
-### External Libraries used in this project:
+## Contact
 
-- [framer-motion](https://www.framer.com/motion/) <br />
-- [Tailwind css](https://tailwindcss.com/) <br />
-
-
+- Email: `khaserdene_ts@berkeley.edu`
+- LinkedIn: `https://www.linkedin.com/in/khas-erdene-tsogtsaikhan/`
+- GitHub: `https://github.com/Khas-Erdene-Tsogtsaikhan`
