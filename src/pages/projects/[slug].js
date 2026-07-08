@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { resumePortfolio } from '@/data/resumePortfolio'
+import { ArrowUpRight } from '@/components/editorial/icons'
 import styles from '@/styles/CaseStudy.module.css'
 
 const engineeringDepth = {
@@ -81,7 +81,7 @@ export default function CaseStudy({ project }) {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <header className={styles.header}>
-        <Link href="/#projects">← Back to projects</Link>
+        <Link href="/#work">← Back to work</Link>
         <span>KHAS-ERDENE TSOGTSAIKHAN</span>
         <Link href="/#contact">Contact</Link>
       </header>
@@ -150,7 +150,7 @@ export default function CaseStudy({ project }) {
           <div>{project.architecture.map((node, index) => <motion.div key={node} initial={reduceMotion ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .4 }} transition={{ duration: .42, delay: index * .07 }}><small>0{index + 1}</small><strong>{node}</strong>{index < project.architecture.length - 1 ? <i>→</i> : null}</motion.div>)}</div>
         </section>
       </main>
-      <footer><Link href="/#projects">Explore another project ↗</Link><span>Case study · live links inside</span></footer>
+      <footer><Link href="/#work">Explore another project ↗</Link><span>Case study · live links inside</span></footer>
     </div>
   )
 }

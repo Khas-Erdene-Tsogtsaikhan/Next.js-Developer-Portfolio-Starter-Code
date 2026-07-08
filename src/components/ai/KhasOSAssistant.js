@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUp, Database, MessageSquare, Sparkles, X } from 'lucide-react'
+import { Activity, ArrowUp, Database, MessageSquare, Sparkles, X } from 'lucide-react'
 import { answerKhasQuestion, KHAS_OS_PROMPTS } from '@/lib/khas-os'
 import styles from '@/styles/KhasOS.module.css'
 
@@ -63,20 +63,23 @@ function ChatPanel({ onClose, showClose = false }) {
   }
 
   return (
-    <motion.section className={styles.panel} aria-label="KhasOS portfolio assistant" initial={reduceMotion ? false : { opacity: 0, y: 14, scale: .99 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}>
+    <section className={styles.panel} aria-label="KhasOS portfolio assistant">
       <motion.header className={styles.header} initial={reduceMotion ? false : { opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .08, duration: .42 }}>
         <div className={styles.identity}>
           <span className={styles.avatar}>K</span>
           <div><strong>KhasOS</strong><span>Local portfolio assistant</span></div>
         </div>
-        <div className={styles.headerMeta}><i /> Local</div>
+        <div className={styles.headerMeta}><i /> Source-grounded</div>
         {showClose ? <button className={styles.closeButton} type="button" onClick={onClose} aria-label="Close KhasOS"><X /></button> : null}
       </motion.header>
 
       <motion.div className={styles.assistantIntro} initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .13, duration: .45 }}>
+        <div><span>KHAS / PORTFOLIO INTELLIGENCE</span><b><i /> Ready</b></div>
         <h2>Ask me about Khas.</h2>
-        <p>Grounded in verified project data.</p>
+        <p>Source-grounded answers for recruiters and technical teams.</p>
       </motion.div>
+
+      <div className={styles.systemStatus} aria-label="KhasOS system status"><span><Database /> Verified portfolio context</span><i /><span><Activity /> Local retrieval</span><i /><span><Sparkles /> Session memory</span></div>
 
       <div className={styles.messages} ref={scrollRef} aria-live="polite">
         {messages.map((message) => (
@@ -98,7 +101,7 @@ function ChatPanel({ onClose, showClose = false }) {
       <div className={styles.promptArea}>
         <span>Suggested</span>
         <div className={styles.prompts} aria-label="Suggested prompts">
-          {KHAS_OS_PROMPTS.map((prompt) => <motion.button type="button" onClick={() => ask(prompt)} whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: .97 }} key={prompt}>{prompt}</motion.button>)}
+          {KHAS_OS_PROMPTS.slice(0, 3).map((prompt) => <motion.button type="button" onClick={() => ask(prompt)} whileHover={reduceMotion ? undefined : { y: -1 }} whileTap={reduceMotion ? undefined : { scale: .985 }} key={prompt}>{prompt}</motion.button>)}
         </div>
       </div>
 
@@ -108,13 +111,14 @@ function ChatPanel({ onClose, showClose = false }) {
         <button type="submit" disabled={!input.trim() || !['idle', 'error'].includes(stage)} aria-label="Send question"><ArrowUp /></button>
       </form>
       <footer><Sparkles /> Local portfolio assistant grounded in verified project data</footer>
-    </motion.section>
+    </section>
   )
 }
 
 export default function KhasOSAssistant({ mode = 'desktop' }) {
   const [open, setOpen] = useState(false)
   const launcherRef = useRef(null)
+  const sheetRef = useRef(null)
   const wasOpenRef = useRef(false)
   const reduceMotion = useReducedMotion()
 
@@ -133,6 +137,27 @@ export default function KhasOSAssistant({ mode = 'desktop' }) {
     return () => { document.body.style.overflow = '' }
   }, [mode, open])
 
+  useEffect(() => {
+    if (mode !== 'mobile' || !open) return undefined
+    const sheet = sheetRef.current
+    const keepFocusInside = (event) => {
+      if (event.key !== 'Tab' || !sheet) return
+      const focusable = [...sheet.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled)')]
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    sheet?.addEventListener('keydown', keepFocusInside)
+    return () => sheet?.removeEventListener('keydown', keepFocusInside)
+  }, [mode, open])
+
   if (mode === 'desktop') return <div className={styles.desktop}><ChatPanel /></div>
 
   return (
@@ -142,7 +167,7 @@ export default function KhasOSAssistant({ mode = 'desktop' }) {
         {open ? (
           <>
             <motion.button className={styles.backdrop} type="button" aria-label="Close KhasOS" onClick={() => setOpen(false)} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
-            <motion.div className={styles.sheet} role="dialog" aria-modal="true" aria-label="KhasOS portfolio assistant" initial={reduceMotion ? false : { y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}><div className={styles.sheetHandle} /><ChatPanel showClose onClose={() => setOpen(false)} /></motion.div>
+            <motion.div ref={sheetRef} className={styles.sheet} role="dialog" aria-modal="true" aria-label="KhasOS portfolio assistant" initial={reduceMotion ? false : { y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ duration: .42, ease: [0.22, 1, 0.36, 1] }}><div className={styles.sheetHandle} /><ChatPanel showClose onClose={() => setOpen(false)} /></motion.div>
           </>
         ) : null}
       </AnimatePresence>

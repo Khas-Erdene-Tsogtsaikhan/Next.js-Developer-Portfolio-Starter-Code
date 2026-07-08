@@ -1,30 +1,32 @@
-import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import styles from '@/styles/StudioPortfolio.module.css'
 
-export default function StudioProjectCard({ project, featured = project.featured, index = 0 }) {
-  const ref = useRef(null)
+export default function StudioProjectCard({ project, featured = false, index = 0 }) {
   const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 0.45, 1], [54, 0, -22])
-  const scale = useTransform(scrollYProgress, [0, 0.45, 1], [0.97, 1, 0.99])
+
+  const updateSpotlight = (event) => {
+    if (reduceMotion) return
+    const bounds = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty('--mouse-x', `${event.clientX - bounds.left}px`)
+    event.currentTarget.style.setProperty('--mouse-y', `${event.clientY - bounds.top}px`)
+  }
 
   return (
     <motion.div
-      ref={ref}
-      style={reduceMotion ? undefined : { y, scale }}
-      initial={reduceMotion ? false : { opacity: 0, filter: 'blur(9px)' }}
-      whileInView={{ opacity: 1, filter: 'blur(0px)' }}
+      initial={reduceMotion ? false : { opacity: 0, y: 32, filter: 'blur(8px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, amount: .14 }}
-      transition={{ duration: .48, delay: (index % 2) * .1, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduceMotion ? undefined : { y: -6, rotateX: 0.65, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
+      transition={{ duration: .8, delay: (index % 2) * .06, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={reduceMotion ? undefined : { y: -4, transition: { duration: .32, ease: [0.16, 1, 0.3, 1] } }}
       whileTap={reduceMotion ? undefined : { scale: 0.985, transition: { duration: 0.12 } }}
       className={`${styles.projectWrap} ${featured ? styles.projectFeatured : ''}`}
+      data-project={project.slug}
+      onPointerMove={updateSpotlight}
     >
       <Link href={`/projects/${project.slug}`} className={styles.projectLink} aria-label={`Open ${project.title} case study`}>
         <Card className={styles.projectCard}>

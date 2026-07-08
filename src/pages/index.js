@@ -1,1 +1,1 @@
-export { default } from '@/components/ai/StudioPortfolio'
+export { default } from '@/components/editorial/EditorialPortfolio'

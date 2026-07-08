@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, FileText, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import styles from '@/styles/StudioPortfolio.module.css'
@@ -16,6 +16,7 @@ export default function PortfolioNavbar({ data }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeHref, setActiveHref] = useState('#home')
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24)
@@ -54,10 +55,15 @@ export default function PortfolioNavbar({ data }) {
   }, [open])
 
   return (
-    <header className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`}>
+    <motion.header className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ''}`} style={{ x: '-50%' }} initial={reduceMotion ? false : { opacity: 0, y: -14, filter: 'blur(8px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ duration: .8, delay: .58, ease: [0.16, 1, 0.3, 1] }}>
       <a className={styles.brand} href="#home" onClick={() => setOpen(false)}><span>{data.initials}</span><strong>{data.name}</strong></a>
       <nav className={styles.desktopNav} aria-label="Primary navigation">
-        {links.map(([label, href]) => <a className={activeHref === href ? styles.navLinkActive : ''} href={href} aria-current={activeHref === href ? 'page' : undefined} key={href}>{label}</a>)}
+        {links.map(([label, href]) => (
+          <a className={activeHref === href ? styles.navLinkActive : ''} href={href} aria-current={activeHref === href ? 'page' : undefined} key={href}>
+            {activeHref === href ? <motion.span className={styles.navActiveCapsule} layoutId="nav-active" transition={{ type: 'spring', stiffness: 380, damping: 34 }} aria-hidden="true" /> : null}
+            <span>{label}</span>
+          </a>
+        ))}
       </nav>
       <div className={styles.navActions}>
         <Button asChild variant="outline" size="sm" className={styles.resumeNavButton}><a href="#resume"><FileText /> Resume</a></Button>
@@ -73,6 +79,6 @@ export default function PortfolioNavbar({ data }) {
           </motion.nav>
         ) : null}
       </AnimatePresence>
-    </header>
+    </motion.header>
   )
 }
