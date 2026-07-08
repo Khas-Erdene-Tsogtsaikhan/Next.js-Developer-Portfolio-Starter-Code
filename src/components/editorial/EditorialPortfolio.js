@@ -108,10 +108,10 @@ export default function EditorialPortfolio() {
                 <Reveal key={project.slug} className={`${styles.feature} ${i % 2 === 1 ? styles.featureReverse : ''}`} amount={0.2}>
                   <Tilt className={styles.featureMediaWrap} max={7}>
                     <FeatureMedia
-                      src={project.media}
+                      src={project.thumb || project.media}
                       alt={project.mediaAlt}
                       label={project.mediaLabel}
-                      fit={project.mediaFit || 'cover'}
+                      fit={project.thumbFit || project.mediaFit || 'cover'}
                       badge={(featuredStats[project.slug] || [])[0] ? `${featuredStats[project.slug][0].b} ${featuredStats[project.slug][0].s}` : undefined}
                     />
                   </Tilt>

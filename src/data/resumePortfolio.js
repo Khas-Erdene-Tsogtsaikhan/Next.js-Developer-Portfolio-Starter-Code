@@ -98,6 +98,8 @@ export const resumePortfolio = {
       externalUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7464712615882043393/',
       externalLabel: 'Funding post + photos',
       mediaFit: 'phone',
+      thumb: '/evidence/nutriomn-logo.svg',
+      thumbFit: 'logo',
       gallery: [
         { src: '/evidence/nutriomn-funding-post.png', alt: 'NutrioMN funding announcement and builder workstation proof', label: 'Funding proof - Angel-backed build process', fit: 'wide' },
         { src: '/evidence/builder-workstation.png', alt: 'Workstation with code and development setup', label: 'Build proof - Product engineering workstation', fit: 'wide' },

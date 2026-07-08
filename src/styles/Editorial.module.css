@@ -635,6 +635,17 @@
   padding: 0;
 }
 
+/* Logo/mark — centered on a soft backdrop with generous breathing room */
+.featureMedia[data-fit='logo'] {
+  background: radial-gradient(70% 62% at 50% 46%, #ffffff, var(--paper-2) 72%);
+}
+.featureMedia[data-fit='logo'] img {
+  object-fit: contain;
+  padding: clamp(2.2rem, 8vw, 4.8rem);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.feature:hover .featureMedia[data-fit='logo'] img { transform: scale(1.04) rotate(-2deg); }
+
 /* Work-index thumbnails */
 .workThumb {
   width: 4.8rem;

@@ -1,0 +1,5 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NutrioMN logo">
+  <circle cx="120" cy="120" r="86" fill="none" stroke="#3E9E63" stroke-width="15" stroke-linecap="round" stroke-dasharray="20 25" transform="rotate(-9 120 120)"/>
+  <path d="M120 68 C144 94 144 146 120 172 C96 146 96 94 120 68 Z" fill="#3E9E63"/>
+  <line x1="120" y1="79" x2="120" y2="161" stroke="#FBFAF6" stroke-width="6" stroke-linecap="round"/>
+</svg>
